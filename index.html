@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Student Assigned Chores Generator">
+    <meta name="theme-color" content="#2563EB">
+    <title>GBF-INJ Student Chores Generator</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><circle fill='%232563EB' cx='96' cy='96' r='96'/><text x='96' y='110' font-size='80' fill='white' text-anchor='middle' font-weight='bold'>GC</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><circle fill='%232563EB' cx='96' cy='96' r='96'/><text x='96' y='110' font-size='80' fill='white' text-anchor='middle' font-weight='bold'>SCG</text></svg>">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">TCAR and Activities <span>Generator</span></div>
+        <div>
+            <button class="menu-btn" id="menuBtn" aria-label="Menu">
+                <svg viewBox="1.5 4.5 21 15" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <line x1="3" y1="12" x2="21" y2="12"/>
+                    <line x1="3" y1="18" x2="21" y2="18"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="menu-item active" data-section="daily-cleaning">
+            📝 Daily Cleaning
+        </div>
+        <div class="menu-item" data-section="health-declaration">
+            🏥 Health Declaration
+        </div>
+        <div class="menu-item" data-section="study-hour">
+            📚 Study Hour
+        </div>
+        <div class="menu-item" data-section="general-manualia">
+            🛠️ General Manualia
+        </div>
+        <div class="menu-item" data-section="general-assembly">
+            👥 General Assembly
+        </div>
+        <div class="menu-item" data-section="violations">
+            ⚠️ Violations
+        </div>
+
+        <button class="install-btn" id="installBtn" type="button">Install</button>
+    </div>
+
+    <div class="container">
+        <!-- DAILY CLEANING SECTION -->
+        <div class="content-section active" id="daily-cleaning">
+            <div class="section-title">
+                <span class="icon">📝</span>
+                Daily Cleaning Assignment
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✓ Task saved successfully!
+            </div>
+            <div class="area-help-row">
+                        <button type="button" class="help-btn" id="cleaningAreaHelpBtn" aria-label="Check today's cleaning assignment">?</button>
+                        <span class="help-label">Don't know your area ? Check out here</span>
+                    </div>
+            <form id="cleaningForm">
+                <div class="form-group">
+                    <label class="required">Date</label>
+                    <input type="date" id="cleaningDate" required>
+                </div>
+
+                <div class="two-col">
+                    <div class="form-group">
+                        <label class="required">Time Started</label>
+                        <select id="timeStarted" value="Select Time" required>
+                            <option value=""disable selected hidden>Select time</option>
+                            <option value="05:55 AM">05:55 AM</option>
+                            <option value="06:00 AM">06:00 AM</option>
+                            <option value="06:30 AM">06:30 AM</option>
+                            <option value="07:00 AM">07:00 AM</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Time Ended</label>
+                        <select id="timeEnded" required>
+                            <option value=""disable selected hidden>Select time</option>
+                            <option value="06:30 AM">06:30 AM</option>
+                            <option value="07:00 AM">07:00 AM</option>
+                            <option value="07:30 AM">07:30 AM</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Cleaning Assignment</label>
+                    <select id="cleaningArea" required>
+                        <option value="">Select area</option>
+                        <option value="Area A (Shower and CR Cleaning)">Area A (CR and Hallway Cleaning)</option>
+                        <option value="Area B (Lobby, Front Lobby, VFR)">Area B (Lobby, Front Lobby, VFR, Front TTC Cleaning)</option>
+                        <option value="Area C (Segregation Area)">Area C (Court, Garden, Segregation, Compost Pit Cleaning)</option>
+                        <option value="Area D (Snacks and Laundry Area)">Area D (Snacks Area, Laundry
+SHC
+Area, Pump Area, Garbage Bin
+Segregation Cleaning)</option>
+                        <option value="Area E (Common Area Cleaning)">Area E (Canteen Cleaning,
+FCC
+Water Refill, Garbage Bin
+Segregation, Back Side Canteen Cleaning)</option>
+                    </select>
+                    <div class="area-help-panel" id="cleaningAreaHelpPanel" hidden></div>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="hasSatClass">
+                    <label for="hasSatClass" style="margin-bottom: 0;">Has Saturday class?</label>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Checked by</label>
+                    <input type="text" id="checkedByName" placeholder="e.g. Anub, Johnciel T." required>
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Report</button>
+            </form>
+
+            <div class="output-box" id="cleaningOutput" style="display: none;">
+                <button class="copy-btn" onclick="copyToClipboard('cleaningOutput')" value="Copy">📋 Copy</button>
+                <div id="cleaningOutputContent"></div>
+            </div>
+        </div>
+
+        <!-- HEALTH DECLARATION SECTION -->
+        <div class="content-section" id="health-declaration">
+            <div class="section-title">
+                <span class="icon">🏥</span>
+                Health Declaration
+            </div>
+
+            <div class="success-message" id="successMessageHealth">
+                ✓ Health declaration saved successfully!
+            </div>
+
+            <form id="healthForm">
+                <div class="form-group">
+                    <label class="required">Batch</label>
+                    <select id="batch" required>
+                        <option value="">Select batch</option>
+                        <option value="B34">B34</option>
+                        <option value="B35">B35</option>
+                        <option value="B36">B36</option>
+                        <option value="B37">B37</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">M Code</label>
+                    <select id="mcode" required>
+                        <option value="">Select M Code</option>
+                        <option value="M1">M1</option>
+                        <option value="M2">M2</option>
+                        <option value="M3">M3</option>
+                        <option value="M4">M4</option>
+                        <option value="M5">M5</option>
+                        <option value="M6">M6</option>
+                        <option value="M7">M7</option>
+                        <option value="M8">M8</option>
+                        <option value="M9">M9</option>
+                        <option value="M10">M10</option>
+                        <option value="M11">M11</option>
+                        <option value="M12">M12</option>
+                        <option value="M13">M13</option>
+                        <option value="M14">M14</option>
+                        <option value="M15">M15</option>
+                        <option value="M16">M16</option>
+                        <option value="M17">M17</option>
+                        <option value="M18">M18</option>
+                        <option value="M19">M19</option>
+                        <option value="M20">M20</option>
+                        <option value="M21">M21</option>
+                        <option value="M22">M22</option>
+                        <option value="M23">M23</option>
+                        <option value="M24">M24</option>
+                        <option value="M25">M25</option>
+                        <option value="M26">M26</option>
+                        <option value="M27">M27</option>
+                        <option value="M28">M28</option>
+                        <option value="M29">M29</option>
+                        <option value="M30">M30</option>
+                        <option value="M31">M31</option>
+                        <option value="M32">M32</option>
+                        <option value="M33">M33</option>
+                        <option value="M34">M34</option>
+                        <option value="M35">M35</option>
+                        <option value="M36">M36</option>
+                        <option value="M37">M37</option>
+                        <option value="M38">M38</option>
+                        <option value="M39">M39</option>
+                        <option value="M40">M40</option>
+                        <option value="M41">M41</option>
+                        <option value="M42">M42</option>
+                        <option value="M43">M43</option>
+                        <option value="M44">M44</option>
+                        <option value="M45">M45</option>
+                        <option value="M46">M46</option>
+                        <option value="M47">M47</option>
+                        <option value="M48">M48</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Full Name</label>
+                    <input type="text" id="healthFullName" placeholder="Lastname, Firstname M." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Temperature (°C)</label>
+                    <input type="number" id="temperature" placeholder="e.g., 36.5" step="0.1">
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Declaration</button>
+            </form>
+
+            <div class="output-box" id="healthOutput" style="display: none;">
+                <button class="copy-btn" onclick="copyToClipboard('healthOutput')">📋 Copy</button>
+                <div id="healthOutputContent"></div>
+            </div>
+        </div>
+
+        <!-- STUDY HOUR SECTION -->
+        <div class="content-section" id="study-hour">
+            <div class="section-title">
+                <span class="icon">📚</span>
+                Study Period
+            </div>
+
+            <div class="success-message" id="successMessageStudy">
+                ✓ Study period saved successfully!
+            </div>
+
+            <form id="studyForm">
+                <div class="form-group">
+                    <label class="required">Date</label>
+                    <input type="date" id="studyDate" required>
+                </div>
+
+                <div class="two-col">
+                    <div class="form-group">
+                        <label class="required">Time Started</label>
+                        <input type="time" id="studyTimeStart" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Time Ended</label>
+                        <input type="time" id="studyTimeEnd" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Remarks</label>
+                    <select id="studyRemarks" required>
+                        <option value="">Select status</option>
+                        <option value="Present">Present</option>
+                        <option value="Absent">Absent</option>
+                        <option value="Excused">Excused</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Checked by</label>
+                    <input type="text" id="studyCheckedBy" placeholder="e.g., Fajardo, Janice B." required>
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Report</button>
+            </form>
+
+            <div class="output-box" id="studyOutput" style="display: none;">
+                <button class="copy-btn" onclick="copyToClipboard('studyOutput')">📋 Copy</button>
+                <div id="studyOutputContent"></div>
+            </div>
+        </div>
+
+        <!-- GENERAL MANUALIA SECTION -->
+        <div class="content-section" id="general-manualia">
+            <div class="section-title">
+                <span class="icon">🛠️</span>
+                General Manualia
+            </div>
+
+            <div class="success-message" id="successMessageManualia">
+                ✓ Manualia saved successfully!
+            </div>
+
+            <form id="manualiaForm">
+                <div class="form-group">
+                    <label class="required">Date</label>
+                    <input type="date" id="manualiaDate" required>
+                </div>
+
+                <div class="two-col">
+                    <div class="form-group">
+                        <label class="required">Time Started</label>
+                        <input type="time" id="manualiaTimeStart" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Time Ended</label>
+                        <input type="time" id="manualiaTimeEnd" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Remarks</label>
+                    <select id="manualiaRemarks" required>
+                        <option value="">Select status</option>
+                        <option value="Task done">Task done</option>
+                        <option value="In progress">In progress</option>
+                        <option value="Incomplete">Incomplete</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Checked by (MEC Head)</label>
+                    <input type="text" id="manualiaCheckedBy" placeholder="e.g., Name, Initial" required>
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Report</button>
+            </form>
+
+            <div class="output-box" id="manualiaOutput" style="display: none;">
+                <button class="copy-btn" onclick="copyToClipboard('manualiaOutput')">📋 Copy</button>
+                <div id="manualiaOutputContent"></div>
+            </div>
+        </div>
+
+        <!-- GENERAL ASSEMBLY SECTION -->
+        <div class="content-section" id="general-assembly">
+            <div class="section-title">
+                <span class="icon">👥</span>
+                General Assembly
+            </div>
+
+            <div class="success-message" id="successMessageAssembly">
+                ✓ Assembly record saved successfully!
+            </div>
+
+            <form id="assemblyForm">
+                <div class="form-group">
+                    <label class="required">Date</label>
+                    <input type="date" id="assemblyDate" required>
+                </div>
+
+                <div class="two-col">
+                    <div class="form-group">
+                        <label class="required">Time Started</label>
+                        <input type="time" id="assemblyTimeStart" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="required">Time Ended</label>
+                        <input type="time" id="assemblyTimeEnd" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Remarks</label>
+                    <select id="assemblyRemarks" required>
+                        <option value="">Select status</option>
+                        <option value="Task Done">Task Done</option>
+                        <option value="Attended">Attended</option>
+                        <option value="Absent">Absent</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Checked by (Batch Senior Servant Leader)</label>
+                    <input type="text" id="assemblyCheckedBy" placeholder="Name or title" required>
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Report</button>
+            </form>
+
+            <div class="output-box" id="assemblyOutput" style="display: none;">
+                <button class="copy-btn" onclick="copyToClipboard('assemblyOutput')">📋 Copy</button>
+                <div id="assemblyOutputContent"></div>
+            </div>
+        </div>
+
+        <!-- VIOLATIONS SECTION -->
+        <div class="content-section" id="violations">
+            <div class="section-title">
+                <span class="icon">⚠️</span>
+                Violations
+            </div>
+
+            <div class="success-message" id="successMessageViolation">
+                ✓ Violation report saved successfully!
+            </div>
+
+            <form id="violationForm">
+                <div class="form-group">
+                    <label class="required">Type of Violation</label>
+                    <select id="violationType" required>
+                        <option value=""disable selected hidden>Select committee</option>
+                        <option value="DDC">DDC</option>
+                        <option value="FCC">FCC</option>
+                        <option value="PPC">PPC</option>
+                        <option value="SHC">SHC</option>
+                        <option value="MEC">MEC</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Date</label>
+                    <input type="date" id="violationDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Name</label>
+                    <input type="text" id="violationName" placeholder="e.g. Lastname, Firstname M." required>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Remarks</label>
+                    <textarea id="violationRemarks" rows="3" placeholder="e.g. Charger left plug and unattended." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="required">Action Taken</label>
+                    <textarea id="violationAction" rows="3" placeholder="e.g. Charger Unplug." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Generate Report</button>
+            </form>
+
+            <div class="output-box" id="violationOutput" style="display: none;">
+                <button class="copy-btn" onclick="copyToClipboard('violationOutput')">📋 Copy</button>
+                <div id="violationOutputContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer" aria-label="Powered by Giane Castro">
+        <img src="img_src/gclogo.png" alt="G.C. logo">
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

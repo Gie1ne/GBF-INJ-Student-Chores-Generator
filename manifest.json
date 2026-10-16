@@ -1,0 +1,23 @@
+{
+  "name": "Student Assigned Chores Generator",
+  "short_name": "Chores Gen",
+  "description": "Generate and track student assigned chores, health declarations, study periods, and general assemblies.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "orientation": "portrait-primary",
+  "lang": "en",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "img_src/gclogo.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
